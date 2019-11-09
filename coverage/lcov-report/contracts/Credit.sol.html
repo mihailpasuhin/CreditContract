@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\Credit.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> Credit.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>52/52</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>50/50</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>11/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>52/52</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity 0.5.12;
+import "./Ownable.sol";
+&nbsp;
+contract Credit is Ownable {
+&nbsp;
+    event BankAccepted(address userAddress, uint timestamp, uint requestSum, uint acceptedSum);
+    event BankDeclined(address userAddress, uint timestamp);
+    event UserAccepted(address userAddress, uint timestamp, uint requestSum, uint acceptedSum);
+    event UserDeclined(address userAddress, uint timestamp);
+    event NewRequest(address userAddress, uint timestamp, uint requestSum);
+    event DelegateAdded(address userAddress, address delegateAddress);
+    event DelegateDeleted(address userAddress, address delegateAddress);
+&nbsp;
+    enum Status{ NOT_SET, ACCEPTED, DECLINED }
+&nbsp;
+    struct Request {
+        uint requestSum;
+        uint acceptedSum;
+        Status bankStatus;
+        Status userStatus;
+    }
+&nbsp;
+    mapping(address=&gt;mapping(uint =&gt; Request)) public requests;
+    mapping(address=&gt;mapping(address =&gt; bool)) public delegates;
+&nbsp;
+    function () external payable {}
+&nbsp;
+    function makeRequest(uint amount) public {
+        require(amount &gt; 0, "Amount is equal or less than 0");
+        uint timestamp = now;
+        Request memory req = Request(amount, 0, Status.NOT_SET, Status.NOT_SET);
+        requests[msg.sender][timestamp] = req;
+        emit NewRequest(msg.sender, timestamp, amount);
+    }
+&nbsp;
+    function makeDelegateRequest(address userAddress, uint amount) public {
+        require(userAddress != address(0), "Address is not correct!");
+        require(amount &gt; 0, "Amount is equal or less than 0");
+        require(delegates[userAddress][msg.sender], "User is not a delegate!");
+        uint timestamp = now;
+        Request memory req = Request(amount, 0, Status.NOT_SET, Status.NOT_SET);
+        requests[userAddress][timestamp] = req;
+        emit NewRequest(userAddress, timestamp, amount);
+    }
+&nbsp;
+    function bankAccept(address userAddress, uint timestamp, uint amount) public onlyOwner {
+        require(userAddress != address(0), "Address is not correct!");
+        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(amount &gt; 0, "Amount is equal or less than 0");
+        require(
+            requests[userAddress][timestamp].bankStatus == Status.NOT_SET &amp;&amp;
+            amount &lt;= requests[userAddress][timestamp].requestSum, "Bank status already is sett!");
+        requests[userAddress][timestamp].bankStatus = Status.ACCEPTED;
+        requests[userAddress][timestamp].acceptedSum = amount;
+        emit BankAccepted(userAddress, timestamp, requests[userAddress][timestamp].requestSum, amount);
+    }
+&nbsp;
+    function bankDecline(address userAddress, uint timestamp) public onlyOwner {
+        require(userAddress != address(0), "Address is not correct!");
+        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(requests[userAddress][timestamp].bankStatus == Status.NOT_SET, "Bank status already is set!");
+        requests[userAddress][timestamp].bankStatus = Status.DECLINED;
+        emit BankDeclined(userAddress, timestamp);
+    }
+&nbsp;
+    function userAccept(uint timestamp) public {
+        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(
+            requests[msg.sender][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
+            requests[msg.sender][timestamp].userStatus == Status.NOT_SET,
+            "User status already is set or bank declined!");
+        requests[msg.sender][timestamp].userStatus = Status.ACCEPTED;
+        msg.sender.transfer(requests[msg.sender][timestamp].acceptedSum);
+        emit UserAccepted(
+            msg.sender, timestamp, requests[msg.sender][timestamp].requestSum,
+            requests[msg.sender][timestamp].acceptedSum);
+    }
+&nbsp;
+    function userDelegateAccept(address payable userAddress, uint timestamp) public {
+        require(userAddress != address(0), "Address is not correct!");
+        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(delegates[userAddress][msg.sender], "User is not a delegate!");
+        require(
+            requests[userAddress][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
+            requests[userAddress][timestamp].userStatus == Status.NOT_SET,
+            "User status already is set or bank declined!");
+        requests[userAddress][timestamp].userStatus = Status.ACCEPTED;
+        userAddress.transfer(requests[userAddress][timestamp].acceptedSum);
+        emit UserAccepted(
+            userAddress, timestamp, requests[userAddress][timestamp].requestSum,
+            requests[userAddress][timestamp].acceptedSum);
+    }
+&nbsp;
+    function userDecline(uint timestamp) public {
+        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(
+            requests[msg.sender][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
+            requests[msg.sender][timestamp].userStatus == Status.NOT_SET,
+            "User status already is set or bank declined!");
+        requests[msg.sender][timestamp].userStatus = Status.DECLINED;
+        emit UserDeclined(msg.sender, timestamp);
+    }
+&nbsp;
+    function userDelegateDecline(address payable userAddress, uint timestamp) public {
+        require(userAddress != address(0), "Address is not correct!");
+        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(delegates[userAddress][msg.sender], "User is not a delegate!");
+        require(
+            requests[userAddress][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
+            requests[userAddress][timestamp].userStatus == Status.NOT_SET,
+            "User status already is set or bank declined!");
+        requests[userAddress][timestamp].userStatus = Status.DECLINED;
+        emit UserDeclined(userAddress, timestamp);
+    }
+&nbsp;
+    function addUserDelegate(address delegate) public {
+        require(delegate != address(0), "Address is not correct!");
+        delegates[msg.sender][delegate] = true;
+        emit DelegateAdded(msg.sender, delegate);
+    }
+&nbsp;
+    function deleteUserDelegate(address delegate) public {
+        require(delegate != address(0), "Address is not correct!");
+        delegates[msg.sender][delegate] = false;
+        emit DelegateDeleted(msg.sender, delegate);
+    }
+&nbsp;
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Nov 10 2019 01:17:08 GMT+0300 (GMT+03:00)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

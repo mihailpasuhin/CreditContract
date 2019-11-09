@@ -1,0 +1,22 @@
+{
+  "name": "credit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.0",
+    "solhint": "^2.3.0",
+    "solium": "^1.2.5"
+  },
+  "devDependencies": {
+    "solidity-coverage": "^0.6.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mihail Pasuhin",
+  "license": "ISC"
+}
