@@ -27,17 +27,6 @@ contract('test', async (accounts) => {
 
 	describe('user makes all himself', async function() {
 
-		it('fallback function [send 1 ether]', async function() {
-			
-			let contractBalanceBefore = await web3.eth.getBalance(Credit.address);
-
-			await Credit.send(one_ether);
-
-			let contractBalanceAfter = await web3.eth.getBalance(Credit.address);
-
-			assert.equal(contractBalanceAfter-contractBalanceBefore, one_ether, "Contract balance is not correct");
-		});
-
 		it('make request [1000 wei]', async function() {
 			
 			await Credit.makeRequest(one_thousand_wei, {from: user});
@@ -59,7 +48,26 @@ contract('test', async (accounts) => {
 			
 			let error;
 			try {
-				await Credit.userAccept(timestamp, one_thousand_wei, {from: another_user});
+				await Credit.bankAccept(user, timestamp, {from: another_user, value: one_thousand_wei});
+			} catch (err) {
+				error = err;	
+			}
+			assert.instanceOf(error, Error);
+			
+			let request = await Credit.requests.call(user, timestamp);
+			
+			assert.isTrue(one_thousand_wei.eq(request.requestSum), "Request sum is not correct");
+			assert.isTrue(new BigNumber(0).eq(request.acceptedSum), "Accepted sum is not correct");
+			assert.isTrue(Statuses.NOT_SET.eq(request.bankStatus), "Bank status is not correct");
+			assert.isTrue(Statuses.NOT_SET.eq(request.userStatus), "User status is not correct");
+
+		});
+
+		it('try to accept from owner with wrong value', async function() {
+			
+			let error;
+			try {
+				await Credit.bankAccept(user, timestamp, {from: owner, value: new BigNumber(0)});
 			} catch (err) {
 				error = err;	
 			}
@@ -76,7 +84,13 @@ contract('test', async (accounts) => {
 
 		it('accept from owner', async function() {
 			
-			await Credit.bankAccept(user, timestamp, one_thousand_wei, {from: owner});
+			let contractBalanceBefore = new BigNumber(await web3.eth.getBalance(CreditContract.address));
+
+			await Credit.bankAccept(user, timestamp, {from: owner, value: one_thousand_wei});
+
+			let contractBalanceAfter = new BigNumber(await web3.eth.getBalance(CreditContract.address));
+
+			assert.isTrue(contractBalanceAfter.eq(contractBalanceBefore.add(one_thousand_wei)), "Contract balance is not correct");
 
 			let request = await Credit.requests.call(user, timestamp);
 			
@@ -91,7 +105,7 @@ contract('test', async (accounts) => {
 			
 			let error;
 			try {
-				await Credit.bankAccept(user, timestamp, one_thousand_wei, {from: owner});
+				await Credit.bankAccept(user, timestamp, {from: owner, value: one_thousand_wei});
 			} catch (err) {
 				error = err;	
 			}
@@ -199,7 +213,7 @@ describe('delegate makes all for user', async function() {
 
 	it('accept from owner', async function() {
 		
-		await Credit.bankAccept(user, timestamp, one_thousand_wei, {from: owner});
+		await Credit.bankAccept(user, timestamp, {from: owner, value: one_thousand_wei});
 
 		let request = await Credit.requests.call(user, timestamp);
 		
@@ -358,6 +372,73 @@ describe('bank decline the request', async function() {
 
 });
 
+describe('bank decline the request after accept', async function() {
+
+	it('make request [1000 wei]', async function() {
+		
+		await Credit.makeRequest(one_thousand_wei, {from: user});
+		
+		let events = await Credit.getPastEvents('NewRequest', { fromBlock: 0, toBlock: 'latest' } );
+		
+		timestamp = events[events.length - 1].args.timestamp.toString();
+
+		let request = await Credit.requests.call(user, timestamp);
+
+		assert.isTrue(one_thousand_wei.eq(request.requestSum), "Request sum is not correct");
+		assert.isTrue(new BigNumber(0).eq(request.acceptedSum), "Accepted sum is not correct");
+		assert.isTrue(Statuses.NOT_SET.eq(request.bankStatus), "Bank status is not correct");
+		assert.isTrue(Statuses.NOT_SET.eq(request.userStatus), "User status is not correct");
+
+	});
+
+	it('accept from owner', async function() {
+		
+		await Credit.bankAccept(user, timestamp, {from: owner, value: one_thousand_wei});
+
+		let request = await Credit.requests.call(user, timestamp);
+		
+		assert.isTrue(one_thousand_wei.eq(request.requestSum), "Request sum is not correct");
+		assert.isTrue(one_thousand_wei.eq(request.acceptedSum), "Accepted sum is not correct");
+		assert.isTrue(Statuses.ACCEPTED.eq(request.bankStatus), "Bank status is not correct");
+		assert.isTrue(Statuses.NOT_SET.eq(request.userStatus), "User status is not correct");
+
+	});
+
+	it('decline from owner after accept', async function() {
+
+		let userBalanceBefore = new BigNumber(await web3.eth.getBalance(owner));
+
+		let trans = await Credit.bankDecline(user, timestamp, {from: owner});
+
+		let gasCost = new BigNumber(await getGasCost(trans));
+
+		let userBalanceAfter = new BigNumber(await web3.eth.getBalance(owner));
+		
+		assert.isTrue(userBalanceAfter.eq(userBalanceBefore.add(one_thousand_wei).sub(gasCost)), "User balance is not correct");
+		
+		let request = await Credit.requests.call(user, timestamp);
+		
+		assert.isTrue(one_thousand_wei.eq(request.requestSum), "Request sum is not correct");
+		assert.isTrue(new BigNumber(0).eq(request.acceptedSum), "Accepted sum is not correct");
+		assert.isTrue(Statuses.DECLINED.eq(request.bankStatus), "Bank status is not correct");
+		assert.isTrue(Statuses.NOT_SET.eq(request.userStatus), "User status is not correct");
+
+	});
+
+	it('try to accept from user', async function() {
+
+		let error;
+		try {
+			await Credit.userAccept(timestamp, {from: user});
+		} catch (err) {
+			error = err;	
+		}
+		assert.instanceOf(error, Error);
+
+	});
+
+});
+
 describe('user decline the request', async function() {
 
 	it('make request [1000 wei]', async function() {
@@ -391,7 +472,7 @@ describe('user decline the request', async function() {
 
 	it('accept from owner', async function() {
 		
-		await Credit.bankAccept(user, timestamp, one_thousand_wei, {from: owner});
+		await Credit.bankAccept(user, timestamp, {from: owner, value: one_thousand_wei});
 
 		let request = await Credit.requests.call(user, timestamp);
 		
@@ -494,7 +575,7 @@ describe('delegate decline the request', async function() {
 
 	it('accept from owner', async function() {
 		
-		await Credit.bankAccept(user, timestamp, one_thousand_wei, {from: owner});
+		await Credit.bankAccept(user, timestamp, {from: owner, value: one_thousand_wei});
 
 		let request = await Credit.requests.call(user, timestamp);
 		
@@ -624,7 +705,7 @@ describe('call functions with wrong arguments', async function() {
 
 		let error;
 		try {
-			await Credit.bankAccept(wrongAddress, rightTimestamp, rightAmount, {from: owner});
+			await Credit.bankAccept(wrongAddress, rightTimestamp, {from: owner, value: one_thousand_wei});
 		} catch (err) {
 			error = err;	
 		}
@@ -636,7 +717,7 @@ describe('call functions with wrong arguments', async function() {
 
 		let error;
 		try {
-			await Credit.bankAccept(rightAddress, wrongTimestamp, rightAmount, {from: owner});
+			await Credit.bankAccept(rightAddress, wrongTimestamp, {from: owner, value: one_thousand_wei});
 		} catch (err) {
 			error = err;	
 		}
@@ -648,7 +729,7 @@ describe('call functions with wrong arguments', async function() {
 
 		let error;
 		try {
-			await Credit.bankAccept(rightAddress, rightTimestamp, wrongAmount, {from: owner});
+			await Credit.bankAccept(rightAddress, rightTimestamp, {from: owner, value: one_thousand_wei.mul(2)});
 		} catch (err) {
 			error = err;	
 		}

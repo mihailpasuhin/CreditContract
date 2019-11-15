@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>52/52</span>
+        <span class='fraction'>55/55</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>50/50</span>
+        <span class='fraction'>52/52</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>11/11</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>52/52</span>
+        <span class='fraction'>55/55</span>
       </div>
     </div>
   </div>
@@ -170,7 +170,9 @@
 125
 126
 127
-128</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+128
+129
+130</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,13 +198,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,28 +216,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">10×</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">9×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
 <span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-yes">9×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,10 +326,8 @@ contract Credit is Ownable {
     mapping(address=&gt;mapping(uint =&gt; Request)) public requests;
     mapping(address=&gt;mapping(address =&gt; bool)) public delegates;
 &nbsp;
-    function () external payable {}
-&nbsp;
     function makeRequest(uint amount) public {
-        require(amount &gt; 0, "Amount is equal or less than 0");
+        require(amount &gt; 0, "Amount must be more than 0");
         uint timestamp = now;
         Request memory req = Request(amount, 0, Status.NOT_SET, Status.NOT_SET);
         requests[msg.sender][timestamp] = req;
@@ -334,7 +336,7 @@ contract Credit is Ownable {
 &nbsp;
     function makeDelegateRequest(address userAddress, uint amount) public {
         require(userAddress != address(0), "Address is not correct!");
-        require(amount &gt; 0, "Amount is equal or less than 0");
+        require(amount &gt; 0, "Amount must be more than 0");
         require(delegates[userAddress][msg.sender], "User is not a delegate!");
         uint timestamp = now;
         Request memory req = Request(amount, 0, Status.NOT_SET, Status.NOT_SET);
@@ -342,28 +344,32 @@ contract Credit is Ownable {
         emit NewRequest(userAddress, timestamp, amount);
     }
 &nbsp;
-    function bankAccept(address userAddress, uint timestamp, uint amount) public onlyOwner {
+    function bankAccept(address userAddress, uint timestamp) public onlyOwner payable {
         require(userAddress != address(0), "Address is not correct!");
-        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
-        require(amount &gt; 0, "Amount is equal or less than 0");
+        require(timestamp &gt; 0, "Timestamp must be more than 0");
         require(
-            requests[userAddress][timestamp].bankStatus == Status.NOT_SET &amp;&amp;
-            amount &lt;= requests[userAddress][timestamp].requestSum, "Bank status already is sett!");
+            msg.value &gt; 0 &amp;&amp;  msg.value &lt;= requests[userAddress][timestamp].requestSum,
+            "Msg.value must be more than 0 and equal or less than request sum!");
+        require(requests[userAddress][timestamp].bankStatus == Status.NOT_SET, "Bank status already is set!");
         requests[userAddress][timestamp].bankStatus = Status.ACCEPTED;
-        requests[userAddress][timestamp].acceptedSum = amount;
-        emit BankAccepted(userAddress, timestamp, requests[userAddress][timestamp].requestSum, amount);
+        requests[userAddress][timestamp].acceptedSum = msg.value;
+        emit BankAccepted(userAddress, timestamp, requests[userAddress][timestamp].requestSum, msg.value);
     }
 &nbsp;
     function bankDecline(address userAddress, uint timestamp) public onlyOwner {
         require(userAddress != address(0), "Address is not correct!");
-        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
-        require(requests[userAddress][timestamp].bankStatus == Status.NOT_SET, "Bank status already is set!");
+        require(timestamp &gt; 0, "Timestamp must be more than 0");
+        require(requests[userAddress][timestamp].bankStatus != Status.DECLINED, "Bank status already is set!");
+        if(requests[userAddress][timestamp].bankStatus == Status.ACCEPTED) {
+            msg.sender.transfer(requests[userAddress][timestamp].acceptedSum);
+            requests[userAddress][timestamp].acceptedSum = 0;
+        }
         requests[userAddress][timestamp].bankStatus = Status.DECLINED;
         emit BankDeclined(userAddress, timestamp);
     }
 &nbsp;
     function userAccept(uint timestamp) public {
-        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(timestamp &gt; 0, "Timestamp must be more than 0");
         require(
             requests[msg.sender][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
             requests[msg.sender][timestamp].userStatus == Status.NOT_SET,
@@ -377,7 +383,7 @@ contract Credit is Ownable {
 &nbsp;
     function userDelegateAccept(address payable userAddress, uint timestamp) public {
         require(userAddress != address(0), "Address is not correct!");
-        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(timestamp &gt; 0, "Timestamp must be more than 0");
         require(delegates[userAddress][msg.sender], "User is not a delegate!");
         require(
             requests[userAddress][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
@@ -391,7 +397,7 @@ contract Credit is Ownable {
     }
 &nbsp;
     function userDecline(uint timestamp) public {
-        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(timestamp &gt; 0, "Timestamp must be more than 0");
         require(
             requests[msg.sender][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
             requests[msg.sender][timestamp].userStatus == Status.NOT_SET,
@@ -402,7 +408,7 @@ contract Credit is Ownable {
 &nbsp;
     function userDelegateDecline(address payable userAddress, uint timestamp) public {
         require(userAddress != address(0), "Address is not correct!");
-        require(timestamp &gt; 0, "Timestamp is equal or less than 0");
+        require(timestamp &gt; 0, "Timestamp must be more than 0");
         require(delegates[userAddress][msg.sender], "User is not a delegate!");
         require(
             requests[userAddress][timestamp].bankStatus == Status.ACCEPTED &amp;&amp;
@@ -430,7 +436,7 @@ contract Credit is Ownable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Nov 10 2019 01:17:08 GMT+0300 (GMT+03:00)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Nov 15 2019 15:00:46 GMT+0300 (GMT+03:00)
 </div>
 </div>
 <script src="../prettify.js"></script>
